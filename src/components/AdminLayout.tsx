@@ -157,24 +157,30 @@ function AdminSidebar() {
                     <NavLink
                       to={item.url}
                       className={({ isActive }) => cn(
-                        "flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group",
-                        "hover:bg-white/5 hover:scale-[1.02]",
+                        "liquid-nav-item flex items-center gap-3 px-4 py-3 rounded-2xl group relative",
+                        "liquid-hover liquid-pressure",
                         isActive 
-                          ? "bg-gradient-to-r from-chakra-crown/20 to-chakra-third-eye/20 border border-white/20 text-white shadow-lg" 
-                          : "text-white/70 hover:text-white"
+                          ? "active text-white shadow-2xl border border-white/30" 
+                          : "text-white/70 hover:text-white hover:bg-white/5"
                       )}
                     >
                       <div className="relative">
+                        <div className={cn(
+                          "liquid-nav-glow",
+                          isActive(item.url) && "opacity-80"
+                        )}></div>
                         <item.icon className={cn(
-                          "w-5 h-5 transition-all duration-300",
+                          "w-5 h-5 transition-all duration-300 relative z-10",
                           isActive(item.url) && "text-white drop-shadow-lg"
                         )} />
                         {isActive(item.url) && (
-                          <ChakraOrb 
-                            chakra={item.chakra} 
-                            size="sm" 
-                            className="absolute -inset-2 opacity-30" 
-                          />
+                          <div className="absolute -inset-3 animate-chakra-energy-flow">
+                            <ChakraOrb 
+                              chakra={item.chakra} 
+                              size="md" 
+                              className="opacity-60" 
+                            />
+                          </div>
                         )}
                       </div>
                       

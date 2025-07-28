@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { GlassCard } from '@/components/GlassCard';
 import { ChakraOrb } from '@/components/ChakraOrb';
+import { LiquidGrid, LiquidGridItem } from '@/components/LiquidGrid';
+import { ChakraEnergyFlow } from '@/components/ChakraEnergyFlow';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
@@ -39,7 +41,7 @@ interface MetricCardProps {
 const MetricCard = ({ title, value, change, icon, chakra, isLoading }: MetricCardProps) => {
   if (isLoading) {
     return (
-      <GlassCard className="p-6">
+      <GlassCard className="glass-card-surface p-6 contextual-blur-light">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <Skeleton className="h-4 w-20" />
@@ -55,22 +57,27 @@ const MetricCard = ({ title, value, change, icon, chakra, isLoading }: MetricCar
   const isPositive = change >= 0;
   
   return (
-    <GlassCard className="p-6 group hover:scale-105 transition-all duration-300">
-      <div className="flex items-center justify-between">
+    <GlassCard className="glass-card-elevated p-6 group liquid-hover liquid-pressure contextual-blur-medium relative overflow-hidden">
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className={`absolute inset-0 bg-gradient-to-br ${chakra} opacity-10 animate-liquid-flow`}></div>
+      </div>
+      
+      <div className="relative flex items-center justify-between">
         <div>
-          <p className="text-white/60 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-white mt-1">
+          <p className="text-white/60 text-sm font-medium tracking-wide">{title}</p>
+          <p className="text-3xl font-bold text-white mt-1 font-display">
             {typeof value === 'number' ? value.toLocaleString() : value}
           </p>
-          <p className={`text-sm mt-1 flex items-center gap-1 ${
-            isPositive ? 'text-green-400' : 'text-red-400'
+          <p className={`text-sm mt-2 flex items-center gap-1 ${
+            isPositive ? 'text-emerald-400' : 'text-rose-400'
           }`}>
             <TrendingUp className={`w-3 h-3 ${!isPositive ? 'rotate-180' : ''}`} />
             {Math.abs(change)}% {isPositive ? 'growth' : 'decline'}
           </p>
         </div>
-        <div className={`p-3 rounded-full bg-gradient-to-br ${chakra} bg-opacity-20 group-hover:scale-110 transition-transform`}>
+        <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${chakra} bg-opacity-20 group-hover:scale-110 transition-all duration-500`}>
           {icon}
+          <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
     </GlassCard>
@@ -181,147 +188,179 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-slide-up" style={{ animationDelay: '150ms' }}>
-        <MetricCard
-          title="Total Revenue"
-          value={data?.summary.totalRevenue ? `$${(data.summary.totalRevenue / 1000).toFixed(0)}k` : '$0'}
-          change={data?.summary.revenueGrowth || 0}
-          icon={<DollarSign className="w-6 h-6 text-chakra-solar" />}
-          chakra="from-chakra-solar to-chakra-sacral"
-          isLoading={isLoading}
-        />
-        <MetricCard
-          title="Total Users"
-          value={data?.summary.totalUsers || 0}
-          change={data?.summary.userGrowth || 0}
-          icon={<Users className="w-6 h-6 text-chakra-heart" />}
-          chakra="from-chakra-heart to-chakra-throat"
-          isLoading={isLoading}
-        />
-        <MetricCard
-          title="Total Bookings"
-          value={data?.summary.totalBookings || 0}
-          change={data?.summary.bookingGrowth || 0}
-          icon={<Calendar className="w-6 h-6 text-chakra-sacral" />}
-          chakra="from-chakra-sacral to-chakra-root"
-          isLoading={isLoading}
-        />
-        <MetricCard
-          title="Avg Rating"
-          value={data?.summary.avgRating || 0}
-          change={data?.summary.ratingChange || 0}
-          icon={<Star className="w-6 h-6 text-chakra-crown" />}
-          chakra="from-chakra-crown to-chakra-third-eye"
-          isLoading={isLoading}
+      {/* Key Metrics - Dynamic Grid */}
+      <LiquidGrid variant="dynamic" className="animate-fade-slide-up" style={{ animationDelay: '150ms' }}>
+        <LiquidGridItem size="medium">
+          <MetricCard
+            title="Total Revenue"
+            value={data?.summary.totalRevenue ? `$${(data.summary.totalRevenue / 1000).toFixed(0)}k` : '$0'}
+            change={data?.summary.revenueGrowth || 0}
+            icon={<DollarSign className="w-6 h-6 text-chakra-solar" />}
+            chakra="from-chakra-solar to-chakra-sacral"
+            isLoading={isLoading}
+          />
+        </LiquidGridItem>
+        
+        <LiquidGridItem size="wide" featured>
+          <MetricCard
+            title="Total Users"
+            value={data?.summary.totalUsers || 0}
+            change={data?.summary.userGrowth || 0}
+            icon={<Users className="w-6 h-6 text-chakra-heart" />}
+            chakra="from-chakra-heart to-chakra-throat"
+            isLoading={isLoading}
+          />
+        </LiquidGridItem>
+        
+        <LiquidGridItem size="medium">
+          <MetricCard
+            title="Total Bookings"
+            value={data?.summary.totalBookings || 0}
+            change={data?.summary.bookingGrowth || 0}
+            icon={<Calendar className="w-6 h-6 text-chakra-sacral" />}
+            chakra="from-chakra-sacral to-chakra-root"
+            isLoading={isLoading}
+          />
+        </LiquidGridItem>
+        
+        <LiquidGridItem size="tall">
+          <MetricCard
+            title="Avg Rating"
+            value={data?.summary.avgRating || 0}
+            change={data?.summary.ratingChange || 0}
+            icon={<Star className="w-6 h-6 text-chakra-crown" />}
+            chakra="from-chakra-crown to-chakra-third-eye"
+            isLoading={isLoading}
+          />
+        </LiquidGridItem>
+      </LiquidGrid>
+
+      {/* Background Energy Flow */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <ChakraEnergyFlow 
+          nodes={[
+            { id: 'revenue', chakra: 'solar', x: 20, y: 25, active: !!data?.summary.totalRevenue },
+            { id: 'users', chakra: 'heart', x: 40, y: 35, active: !!data?.summary.totalUsers },
+            { id: 'bookings', chakra: 'sacral', x: 60, y: 25, active: !!data?.summary.totalBookings },
+            { id: 'rating', chakra: 'crown', x: 80, y: 35, active: !!data?.summary.avgRating },
+            { id: 'performance', chakra: 'third-eye', x: 30, y: 70, active: !!data?.performance },
+            { id: 'activity', chakra: 'throat', x: 70, y: 70, active: !!data?.recentActivity?.length },
+          ]}
+          connections={true}
+          animated={true}
+          className="opacity-20"
         />
       </div>
 
-      {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-slide-up" style={{ animationDelay: '300ms' }}>
-        {/* Revenue Chart */}
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-chakra-solar bg-opacity-20">
-                <DollarSign className="w-5 h-5 text-chakra-solar" />
+      {/* Charts Grid - Liquid Layout */}
+      <LiquidGrid variant="masonry" columns={3} className="animate-fade-slide-up relative z-10" style={{ animationDelay: '300ms' }}>
+        <LiquidGridItem size="wide">
+          <GlassCard className="glass-card-elevated p-6 contextual-blur-medium">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-chakra-solar bg-opacity-20 animate-energy-pulse">
+                  <DollarSign className="w-6 h-6 text-chakra-solar" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white font-display">Revenue Trends</h3>
+                  <p className="text-white/60 text-sm">Revenue and transaction patterns</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Revenue Trends</h3>
-                <p className="text-white/60 text-sm">Revenue and transaction patterns</p>
-              </div>
+              <Badge variant="outline" className="text-chakra-solar border-chakra-solar bg-chakra-solar/10">
+                {timeframe.toUpperCase()}
+              </Badge>
             </div>
-            <Badge variant="outline" className="text-chakra-solar border-chakra-solar">
-              {timeframe.toUpperCase()}
-            </Badge>
-          </div>
-          {isLoading ? (
-            <Skeleton className="h-80 w-full" />
-          ) : data ? (
-            <RevenueChart data={data.revenue} timeframe={timeframe} />
-          ) : null}
-        </GlassCard>
+            {isLoading ? (
+              <Skeleton className="h-80 w-full rounded-xl" />
+            ) : data ? (
+              <RevenueChart data={data.revenue} timeframe={timeframe} />
+            ) : null}
+          </GlassCard>
+        </LiquidGridItem>
 
-        {/* User Growth Chart */}
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-chakra-heart bg-opacity-20">
-                <Users className="w-5 h-5 text-chakra-heart" />
+        <LiquidGridItem size="large">
+          <GlassCard className="glass-card-floating p-6 contextual-blur-heavy">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-chakra-heart bg-opacity-20 animate-energy-pulse">
+                  <Users className="w-6 h-6 text-chakra-heart" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white font-display">User Growth</h3>
+                  <p className="text-white/60 text-sm">New users and retention metrics</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">User Growth</h3>
-                <p className="text-white/60 text-sm">New users and retention metrics</p>
-              </div>
+              <Badge variant="outline" className="text-chakra-heart border-chakra-heart bg-chakra-heart/10">
+                Active
+              </Badge>
             </div>
-            <Badge variant="outline" className="text-chakra-heart border-chakra-heart">
-              Active
-            </Badge>
-          </div>
-          {isLoading ? (
-            <Skeleton className="h-80 w-full" />
-          ) : data ? (
-            <UserGrowthChart data={data.userGrowth} timeframe={timeframe} />
-          ) : null}
-        </GlassCard>
+            {isLoading ? (
+              <Skeleton className="h-80 w-full rounded-xl" />
+            ) : data ? (
+              <UserGrowthChart data={data.userGrowth} timeframe={timeframe} />
+            ) : null}
+          </GlassCard>
+        </LiquidGridItem>
 
-        {/* Booking Patterns Chart */}
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-chakra-sacral bg-opacity-20">
-                <Calendar className="w-5 h-5 text-chakra-sacral" />
+        <LiquidGridItem size="medium">
+          <GlassCard className="glass-card-elevated p-6 contextual-blur-medium">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-chakra-sacral bg-opacity-20 animate-energy-pulse">
+                  <Calendar className="w-6 h-6 text-chakra-sacral" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white font-display">Booking Patterns</h3>
+                  <p className="text-white/60 text-sm">
+                    {chartView === 'daily' ? 'Daily booking trends' : 'Hourly distribution'}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Booking Patterns</h3>
-                <p className="text-white/60 text-sm">
-                  {chartView === 'daily' ? 'Daily booking trends' : 'Hourly distribution'}
-                </p>
-              </div>
+              <Select value={chartView} onValueChange={(value: 'daily' | 'hourly') => setChartView(value)}>
+                <SelectTrigger className="w-28 glass-input">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="glass-card-floating">
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="hourly">Hourly</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <Select value={chartView} onValueChange={(value: 'daily' | 'hourly') => setChartView(value)}>
-              <SelectTrigger className="w-24">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="hourly">Hourly</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          {isLoading ? (
-            <Skeleton className="h-80 w-full" />
-          ) : data ? (
-            <BookingPatternsChart 
-              data={chartView === 'daily' ? data.bookings : data.hourlyBookings} 
-              type={chartView}
-            />
-          ) : null}
-        </GlassCard>
+            {isLoading ? (
+              <Skeleton className="h-80 w-full rounded-xl" />
+            ) : data ? (
+              <BookingPatternsChart 
+                data={chartView === 'daily' ? data.bookings : data.hourlyBookings} 
+                type={chartView}
+              />
+            ) : null}
+          </GlassCard>
+        </LiquidGridItem>
 
-        {/* Performance Metrics */}
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-chakra-third-eye bg-opacity-20">
-                <Activity className="w-5 h-5 text-chakra-third-eye" />
+        <LiquidGridItem size="medium">
+          <GlassCard className="glass-card-modal p-6 contextual-blur-heavy">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-chakra-third-eye bg-opacity-20 animate-energy-pulse">
+                  <Activity className="w-6 h-6 text-chakra-third-eye" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white font-display">System Performance</h3>
+                  <p className="text-white/60 text-sm">Health and performance metrics</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">System Performance</h3>
-                <p className="text-white/60 text-sm">Health and performance metrics</p>
-              </div>
+              <Badge variant="outline" className="text-emerald-400 border-emerald-400 bg-emerald-400/10">
+                Healthy
+              </Badge>
             </div>
-            <Badge variant="outline" className="text-green-400 border-green-400">
-              Healthy
-            </Badge>
-          </div>
-          {isLoading ? (
-            <Skeleton className="h-80 w-full" />
-          ) : data ? (
-            <PerformanceChart data={data.performance} />
-          ) : null}
-        </GlassCard>
-      </div>
+            {isLoading ? (
+              <Skeleton className="h-80 w-full rounded-xl" />
+            ) : data ? (
+              <PerformanceChart data={data.performance} />
+            ) : null}
+          </GlassCard>
+        </LiquidGridItem>
+      </LiquidGrid>
 
       {/* Demographics and Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-slide-up" style={{ animationDelay: '450ms' }}>
