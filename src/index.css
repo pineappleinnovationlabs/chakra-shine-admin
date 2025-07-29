@@ -498,6 +498,7 @@
       grid-column: span 12;
     }
   }
+}
 
 @layer base {
   * {
