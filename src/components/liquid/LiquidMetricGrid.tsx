@@ -38,7 +38,7 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
         `liquid-grid-item-${size}`,
         size === 'featured' && "liquid-grid-item-featured",
         urgent && "liquid-urgent-glow",
-        "animate-liquid-morph liquid-pressure"
+        "animate-fade-in liquid-hover"
       )}
       style={{ animationDelay: `${delay}ms` }}
     >
@@ -65,9 +65,8 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
           
           {/* Icon Container */}
           <div className={cn(
-            "liquid-glass-elevated rounded-xl p-3 group-hover:scale-110",
-            "transition-all duration-500 liquid-hover",
-            `shadow-chakra-${chakra}`
+            "liquid-glass-elevated rounded-xl p-3 group-hover:scale-105",
+            "transition-all duration-300"
           )}>
             <div className={cn(
               `text-chakra-${chakra}`,
@@ -90,9 +89,9 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
               trend.isPositive ? "text-chakra-heart" : "text-chakra-root"
             )}>
               {trend.isPositive ? (
-                <TrendingUp className="w-4 h-4 animate-bounce" />
+                <TrendingUp className="w-4 h-4" />
               ) : (
-                <TrendingDown className="w-4 h-4 animate-bounce" />
+                <TrendingDown className="w-4 h-4" />
               )}
               <span>
                 {trend.isPositive ? '+' : ''}{trend.value.toFixed(1)}% {trend.label}
@@ -103,19 +102,13 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
           {/* Urgent Indicator */}
           {urgent && (
             <div className="flex items-center gap-2 text-chakra-solar liquid-typography-tertiary">
-              <div className="w-2 h-2 bg-chakra-solar rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-chakra-solar rounded-full" />
               <span>Requires attention</span>
             </div>
           )}
         </div>
       </div>
       
-      {/* Hover Glow Effect */}
-      <div className={cn(
-        "absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-30",
-        "transition-opacity duration-700 pointer-events-none",
-        `shadow-chakra-glow shadow-chakra-${chakra} blur-xl`
-      )} />
     </div>
   );
 }

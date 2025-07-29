@@ -39,7 +39,7 @@ function MetricCard({ title, value, subtitle, icon, chakra, trend, delay = 0 }: 
   return (
     <GlassCard 
       className={cn(
-        "p-6 hover:scale-105 transition-all duration-300 animate-fade-slide-up relative overflow-hidden"
+        "p-6 hover:scale-102 transition-all duration-300 animate-fade-in relative overflow-hidden"
       )}
       style={{ animationDelay: `${delay}ms` }}
     >
@@ -178,7 +178,7 @@ function ActivityFeed() {
         {activities.map((activity, index) => (
           <div
             key={activity.id}
-            className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors animate-fade-slide-up"
+            className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors animate-fade-in"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="flex-shrink-0 mt-0.5">
@@ -242,7 +242,7 @@ function QuickActions() {
           <button
             key={action.title}
             className={cn(
-              "p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 animate-fade-slide-up",
+              "p-4 rounded-lg text-left transition-all duration-300 hover:scale-102 animate-fade-in",
               "bg-white/5 hover:bg-white/10 border border-white/10",
               action.urgent && "border-chakra-solar/50 bg-chakra-solar/10"
             )}
@@ -252,7 +252,7 @@ function QuickActions() {
               {action.icon}
               <span className="font-medium text-white">{action.title}</span>
               {action.urgent && (
-                <span className="w-2 h-2 bg-chakra-solar rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-chakra-solar rounded-full"></span>
               )}
             </div>
             <p className="text-white/60 text-sm">{action.description}</p>
@@ -425,18 +425,18 @@ export default function Dashboard() {
         {/* Dashboard Widgets */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           {/* Activity Feed - Takes 2 columns */}
-          <div className="xl:col-span-2 liquid-glass-elevated rounded-2xl animate-liquid-morph" style={{ animationDelay: '600ms' }}>
+          <div className="xl:col-span-2 liquid-glass-elevated rounded-2xl animate-fade-in" style={{ animationDelay: '400ms' }}>
             <ActivityFeed />
           </div>
           
           {/* Quick Actions - Takes 1 column */}
-          <div className="liquid-glass-elevated rounded-2xl animate-liquid-morph" style={{ animationDelay: '750ms' }}>
+          <div className="liquid-glass-elevated rounded-2xl animate-fade-in" style={{ animationDelay: '500ms' }}>
             <QuickActions />
           </div>
         </div>
 
         {/* Footer Info */}
-        <div className="text-center text-white/40 text-sm animate-fade-slide-up liquid-glass-surface rounded-xl p-4" style={{ animationDelay: '900ms' }}>
+        <div className="text-center text-white/40 text-sm animate-fade-in liquid-glass-surface rounded-xl p-4" style={{ animationDelay: '600ms' }}>
           <p>Last updated: {new Date().toLocaleString()} • Auto-refresh every 30 seconds</p>
         </div>
       </div>
