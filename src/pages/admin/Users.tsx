@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Users as UsersIcon, Eye, Edit, Ban, CheckCircle, XCircle, Calendar, DollarSign } from 'lucide-react';
 import { AdminDataTable, TableColumn, TableAction } from '@/components/AdminDataTable';
-import { GlassCard } from '@/components/GlassCard';
-import { ChakraOrb } from '@/components/ChakraOrb';
+import { LiquidPageHeader } from '@/components/liquid/LiquidPageHeader';
+import { LiquidMetricGrid } from '@/components/liquid/LiquidMetricGrid';
+import { PageChakraTheme } from '@/components/liquid/PageChakraTheme';
 import { cn } from '@/lib/utils';
 
 interface User {
@@ -260,81 +261,84 @@ export default function Users() {
     }
   ];
 
+  const metrics = [
+    {
+      id: 'total-users',
+      title: 'Total Users',
+      value: 24567,
+      subtitle: 'Registered platform users',
+      icon: <UsersIcon className="w-6 h-6" />,
+      chakra: 'heart' as const,
+      size: 'medium' as const,
+      trend: { value: 12.3, isPositive: true, label: 'this week' },
+      delay: 0
+    },
+    {
+      id: 'active-users',
+      title: 'Active Users',
+      value: 18234,
+      subtitle: '74.2% of total users',
+      icon: <CheckCircle className="w-6 h-6" />,
+      chakra: 'heart' as const,
+      size: 'featured' as const,
+      trend: { value: 8.7, isPositive: true, label: 'engagement' },
+      delay: 150
+    },
+    {
+      id: 'new-today',
+      title: 'New Today',
+      value: 89,
+      subtitle: '+23 vs yesterday',
+      icon: <Calendar className="w-6 h-6" />,
+      chakra: 'solar' as const,
+      size: 'medium' as const,
+      trend: { value: 34.8, isPositive: true, label: 'growth' },
+      delay: 300
+    },
+    {
+      id: 'total-revenue',
+      title: 'Total Revenue',
+      value: '$89.2K',
+      subtitle: 'This month from users',
+      icon: <DollarSign className="w-6 h-6" />,
+      chakra: 'sacral' as const,
+      size: 'wide' as const,
+      trend: { value: 15.2, isPositive: true, label: 'revenue' },
+      delay: 450
+    }
+  ];
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between animate-fade-slide-up">
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <ChakraOrb chakra="heart" size="md" className="opacity-80" />
-            <UsersIcon className="w-8 h-8 text-white absolute inset-0 m-auto" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-white font-display">User Management</h1>
-            <p className="text-white/60">Manage and monitor all platform users</p>
-          </div>
+    <PageChakraTheme chakra="heart">
+      <div className="space-y-8">
+        {/* Liquid Header */}
+        <LiquidPageHeader
+          title="User Management"
+          subtitle="Manage and monitor all platform users with advanced insights"
+          icon={<UsersIcon className="w-8 h-8" />}
+          chakra="heart"
+        />
+
+        {/* Liquid Metrics Grid */}
+        <LiquidMetricGrid 
+          metrics={metrics}
+          columns={4}
+          variant="dynamic"
+        />
+
+        {/* Users Table */}
+        <div className="liquid-glass-elevated rounded-2xl p-6 animate-liquid-morph" style={{ animationDelay: '600ms' }}>
+          <AdminDataTable
+            data={mockUsers}
+            columns={columns}
+            actions={actions}
+            filters={filters}
+            searchPlaceholder="Search users by name, email..."
+            isLoading={isLoading}
+            onExport={() => console.log('Export users')}
+          />
         </div>
       </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-slide-up" style={{ animationDelay: '150ms' }}>
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">Total Users</p>
-              <p className="text-2xl font-bold text-white">24,567</p>
-              <p className="text-chakra-heart text-sm">+12.3% this week</p>
-            </div>
-            <UsersIcon className="w-8 h-8 text-chakra-heart" />
-          </div>
-        </GlassCard>
-
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">Active Users</p>
-              <p className="text-2xl font-bold text-white">18,234</p>
-              <p className="text-chakra-heart text-sm">74.2% of total</p>
-            </div>
-            <CheckCircle className="w-8 h-8 text-chakra-heart" />
-          </div>
-        </GlassCard>
-
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">New Today</p>
-              <p className="text-2xl font-bold text-white">89</p>
-              <p className="text-chakra-solar text-sm">+23 vs yesterday</p>
-            </div>
-            <Calendar className="w-8 h-8 text-chakra-solar" />
-          </div>
-        </GlassCard>
-
-        <GlassCard className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">Total Revenue</p>
-              <p className="text-2xl font-bold text-white">$89.2K</p>
-              <p className="text-chakra-sacral text-sm">This month</p>
-            </div>
-            <DollarSign className="w-8 h-8 text-chakra-sacral" />
-          </div>
-        </GlassCard>
-      </div>
-
-      {/* Users Table */}
-      <div className="animate-fade-slide-up" style={{ animationDelay: '300ms' }}>
-        <AdminDataTable
-          data={mockUsers}
-          columns={columns}
-          actions={actions}
-          filters={filters}
-          searchPlaceholder="Search users by name, email..."
-          isLoading={isLoading}
-          onExport={() => console.log('Export users')}
-        />
-      </div>
-    </div>
+    </PageChakraTheme>
   );
 }

@@ -15,6 +15,9 @@ import {
 } from 'lucide-react';
 import { GlassCard } from '@/components/GlassCard';
 import { ChakraOrb } from '@/components/ChakraOrb';
+import { LiquidPageHeader } from '@/components/liquid/LiquidPageHeader';
+import { LiquidMetricGrid } from '@/components/liquid/LiquidMetricGrid';
+import { PageChakraTheme } from '@/components/liquid/PageChakraTheme';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
 
@@ -163,10 +166,10 @@ function ActivityFeed() {
   };
 
   return (
-    <GlassCard className="p-6">
+    <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-white font-display">Recent Activity</h3>
-        <button className="text-chakra-crown hover:text-chakra-third-eye transition-colors text-sm">
+        <h3 className="text-xl font-bold text-white font-display liquid-typography-primary">Recent Activity</h3>
+        <button className="text-chakra-crown hover:text-chakra-third-eye transition-colors text-sm liquid-touch">
           View All
         </button>
       </div>
@@ -194,7 +197,7 @@ function ActivityFeed() {
           </div>
         ))}
       </div>
-    </GlassCard>
+    </div>
   );
 }
 
@@ -231,8 +234,8 @@ function QuickActions() {
   ];
 
   return (
-    <GlassCard className="p-6">
-      <h3 className="text-xl font-bold text-white font-display mb-6">Quick Actions</h3>
+    <div className="p-6">
+      <h3 className="text-xl font-bold text-white font-display mb-6 liquid-typography-primary">Quick Actions</h3>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {actions.map((action, index) => (
@@ -256,7 +259,7 @@ function QuickActions() {
           </button>
         ))}
       </div>
-    </GlassCard>
+    </div>
   );
 }
 
@@ -293,11 +296,13 @@ export default function Dashboard() {
 
   const metrics = data ? [
     {
+      id: 'total-users',
       title: "Total Users",
       value: data.users.total,
       subtitle: `${data.users.newToday} new today, ${data.users.active} active`,
-      icon: <Users className="w-6 h-6 text-chakra-heart" />,
+      icon: <Users className="w-6 h-6" />,
       chakra: 'heart' as const,
+      size: 'featured' as const,
       trend: {
         value: data.users.growth,
         isPositive: data.users.growth > 0,
@@ -306,32 +311,39 @@ export default function Dashboard() {
       delay: 0
     },
     {
+      id: 'practitioners',
       title: "Practitioners",
       value: data.practitioners.total,
       subtitle: `${data.practitioners.verified} verified, ${data.practitioners.pending} pending`,
-      icon: <Heart className="w-6 h-6 text-chakra-throat" />,
+      icon: <Heart className="w-6 h-6" />,
       chakra: 'throat' as const,
+      size: 'medium' as const,
       trend: {
         value: ((data.practitioners.verified / data.practitioners.total) * 100),
         isPositive: true,
         label: 'verified'
       },
-      delay: 150
+      delay: 150,
+      urgent: data.practitioners.pending > 0
     },
     {
+      id: 'bookings-today',
       title: "Bookings Today",
       value: data.bookings.todayCount,
       subtitle: `${data.bookings.completed} completed, ${data.bookings.upcoming} upcoming`,
-      icon: <Calendar className="w-6 h-6 text-chakra-solar" />,
+      icon: <Calendar className="w-6 h-6" />,
       chakra: 'solar' as const,
+      size: 'medium' as const,
       delay: 300
     },
     {
+      id: 'revenue',
       title: "Revenue",
       value: `$${(data.revenue.thisMonth / 1000).toFixed(0)}K`,
       subtitle: `$${data.revenue.total.toLocaleString()} total revenue`,
-      icon: <DollarSign className="w-6 h-6 text-chakra-sacral" />,
+      icon: <DollarSign className="w-6 h-6" />,
       chakra: 'sacral' as const,
+      size: 'large' as const,
       trend: {
         value: data.revenue.growth,
         isPositive: data.revenue.growth > 0,
@@ -340,11 +352,13 @@ export default function Dashboard() {
       delay: 450
     },
     {
+      id: 'products',
       title: "Products",
       value: 234,
       subtitle: "12 new this week, 89% verified",
-      icon: <Package className="w-6 h-6 text-chakra-root" />,
+      icon: <Package className="w-6 h-6" />,
       chakra: 'root' as const,
+      size: 'medium' as const,
       trend: {
         value: 5.2,
         isPositive: true,
@@ -353,19 +367,24 @@ export default function Dashboard() {
       delay: 600
     },
     {
+      id: 'security-events',
       title: "Security Events",
       value: 3,
       subtitle: "2 resolved, 1 pending review",
-      icon: <Shield className="w-6 h-6 text-chakra-third-eye" />,
+      icon: <Shield className="w-6 h-6" />,
       chakra: 'third-eye' as const,
-      delay: 750
+      size: 'medium' as const,
+      delay: 750,
+      urgent: true
     },
     {
+      id: 'user-satisfaction',
       title: "User Satisfaction",
       value: "4.8",
       subtitle: "Based on 1,234 reviews this month",
-      icon: <Star className="w-6 h-6 text-chakra-crown" />,
+      icon: <Star className="w-6 h-6" />,
       chakra: 'crown' as const,
+      size: 'wide' as const,
       trend: {
         value: 0.3,
         isPositive: true,
@@ -374,54 +393,53 @@ export default function Dashboard() {
       delay: 900
     },
     {
+      id: 'system-health',
       title: "System Health",
       value: "99.9%",
       subtitle: "Uptime this month, all systems operational",
-      icon: <Activity className="w-6 h-6 text-chakra-heart" />,
+      icon: <Activity className="w-6 h-6" />,
       chakra: 'heart' as const,
+      size: 'medium' as const,
       delay: 1050
     }
   ] : [];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="animate-fade-slide-up">
-        <h1 className="text-3xl font-bold text-white font-display mb-2">
-          Welcome to your Admin Dashboard
-        </h1>
-        <p className="text-white/60">
-          Monitor and manage your Klear Karma platform with real-time insights and powerful tools.
-        </p>
-      </div>
+    <PageChakraTheme chakra="crown">
+      <div className="space-y-8">
+        {/* Liquid Header */}
+        <LiquidPageHeader
+          title="Admin Dashboard"
+          subtitle="Monitor and manage your Klear Karma platform with real-time insights and powerful tools"
+          icon={<Activity className="w-8 h-8" />}
+          chakra="crown"
+        />
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric) => (
-          <MetricCard
-            key={metric.title}
-            {...metric}
-          />
-        ))}
-      </div>
+        {/* Liquid Metrics Grid */}
+        <LiquidMetricGrid 
+          metrics={metrics}
+          columns={4}
+          variant="dynamic"
+        />
 
-      {/* Dashboard Widgets */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        {/* Activity Feed - Takes 2 columns */}
-        <div className="xl:col-span-2">
-          <ActivityFeed />
+        {/* Dashboard Widgets */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+          {/* Activity Feed - Takes 2 columns */}
+          <div className="xl:col-span-2 liquid-glass-elevated rounded-2xl animate-liquid-morph" style={{ animationDelay: '600ms' }}>
+            <ActivityFeed />
+          </div>
+          
+          {/* Quick Actions - Takes 1 column */}
+          <div className="liquid-glass-elevated rounded-2xl animate-liquid-morph" style={{ animationDelay: '750ms' }}>
+            <QuickActions />
+          </div>
         </div>
-        
-        {/* Quick Actions - Takes 1 column */}
-        <div>
-          <QuickActions />
+
+        {/* Footer Info */}
+        <div className="text-center text-white/40 text-sm animate-fade-slide-up liquid-glass-surface rounded-xl p-4" style={{ animationDelay: '900ms' }}>
+          <p>Last updated: {new Date().toLocaleString()} • Auto-refresh every 30 seconds</p>
         </div>
       </div>
-
-      {/* Footer Info */}
-      <div className="text-center text-white/40 text-sm animate-fade-slide-up" style={{ animationDelay: '1200ms' }}>
-        <p>Last updated: {new Date().toLocaleString()} • Auto-refresh every 30 seconds</p>
-      </div>
-    </div>
+    </PageChakraTheme>
   );
 }

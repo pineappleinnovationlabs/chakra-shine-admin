@@ -2,391 +2,363 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Klear Karma Admin Dashboard Design System */
-/* Chakra-based design with liquid glassmorphism aesthetics */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 @layer base {
+  /* CSS Variables and Design Tokens */
   :root {
-    /* Cosmic Background System */
-    --cosmic-void: 240 10% 4%;
-    --deep-space: 240 12% 8%;
-    --nebula-mist: 240 15% 12%;
-    
-    /* Chakra Energy Colors - 7 Sacred Centers */
-    --chakra-root: 0 65% 55%;       /* Deep Red/Coral - Grounding */
-    --chakra-sacral: 15 70% 60%;    /* Warm Orange - Creativity */
-    --chakra-solar: 45 75% 65%;     /* Golden Yellow - Power */
-    --chakra-heart: 150 45% 55%;    /* Balanced Green - Love */
-    --chakra-throat: 200 60% 65%;   /* Clear Blue - Communication */
-    --chakra-third-eye: 260 70% 60%; /* Deep Indigo - Intuition */
-    --chakra-crown: 280 75% 65%;    /* Mystical Purple - Consciousness */
-    
-    /* Liquid Glass System */
-    --glass-primary: 255 255 255;
-    --glass-secondary: 255 255 255;
-    --glass-border: 255 255 255;
-    
-    /* Core Design Tokens */
-    --background: var(--cosmic-void);
-    --foreground: 0 0% 98%;
-    
-    --card: var(--deep-space);
-    --card-foreground: 0 0% 95%;
-    
-    --primary: var(--chakra-crown);
-    --primary-foreground: 0 0% 98%;
-    
-    --secondary: var(--chakra-third-eye);
-    --secondary-foreground: 0 0% 98%;
-    
-    --accent: var(--chakra-heart);
-    --accent-foreground: 0 0% 98%;
-    
-    --muted: var(--nebula-mist);
-    --muted-foreground: 0 0% 70%;
-    
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 255 255 255 / 0.1;
-    --input: var(--nebula-mist);
-    --ring: var(--chakra-crown);
-    
-    --radius: 1rem;
-    
-    /* Energy Flow Gradients */
-    --gradient-cosmic: linear-gradient(135deg, hsl(var(--cosmic-void)), hsl(var(--deep-space)), hsl(240 15% 20%));
-    --gradient-chakra-flow: linear-gradient(135deg, 
-      hsl(var(--chakra-crown)) 0%, 
-      hsl(var(--chakra-third-eye)) 16.66%, 
-      hsl(var(--chakra-throat)) 33.33%, 
-      hsl(var(--chakra-heart)) 50%, 
-      hsl(var(--chakra-solar)) 66.66%, 
-      hsl(var(--chakra-sacral)) 83.33%, 
-      hsl(var(--chakra-root)) 100%);
-    --gradient-glass: linear-gradient(135deg, 
-      rgba(var(--glass-primary), 0.1) 0%, 
-      rgba(var(--glass-secondary), 0.05) 50%, 
-      rgba(var(--glass-primary), 0.1) 100%);
-    --gradient-glass-border: linear-gradient(135deg, 
-      rgba(var(--glass-border), 0.3) 0%, 
-      rgba(var(--glass-border), 0.1) 50%, 
-      rgba(var(--glass-border), 0.3) 100%);
-      
-    /* Liquid Glass Shadows */
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3), 
-                    0 0 0 1px rgba(255, 255, 255, 0.1),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    --shadow-glass-hover: 0 12px 48px rgba(0, 0, 0, 0.4),
-                          0 0 0 1px rgba(255, 255, 255, 0.2),
-                          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    --shadow-chakra-glow: 0 0 30px hsl(var(--chakra-crown) / 0.6),
-                          0 0 60px hsl(var(--chakra-third-eye) / 0.3);
-  }
-}
+    /* Cosmic Background */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 262 100% 78%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 262 100% 78%;
+    --radius: 0.5rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
 
-@layer base {
+    /* Chakra Energy Colors */
+    --chakra-root: 0 84% 60%;
+    --chakra-sacral: 24 95% 60%;
+    --chakra-solar: 60 95% 60%;
+    --chakra-heart: 120 95% 60%;
+    --chakra-throat: 200 95% 60%;
+    --chakra-third-eye: 240 95% 60%;
+    --chakra-crown: 280 95% 60%;
+
+    /* Liquid Glass System */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur: 16px;
+
+    /* Core Design Tokens */
+    --gradient-cosmic: linear-gradient(135deg, 
+      hsla(var(--chakra-crown), 0.2) 0%, 
+      hsla(var(--chakra-third-eye), 0.15) 25%, 
+      hsla(var(--chakra-heart), 0.1) 50%, 
+      hsla(var(--chakra-solar), 0.15) 75%, 
+      hsla(var(--chakra-root), 0.2) 100%);
+    
+    --gradient-chakra-flow: linear-gradient(45deg, 
+      hsla(var(--chakra-root), 0.3),
+      hsla(var(--chakra-sacral), 0.3),
+      hsla(var(--chakra-solar), 0.3),
+      hsla(var(--chakra-heart), 0.3),
+      hsla(var(--chakra-throat), 0.3),
+      hsla(var(--chakra-third-eye), 0.3),
+      hsla(var(--chakra-crown), 0.3));
+    
+    --gradient-glass: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      rgba(255, 255, 255, 0.05) 100%);
+
+    /* Advanced Shadows */
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-glass-hover: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
+    --shadow-glass-elevated: 0 16px 64px 0 rgba(31, 38, 135, 0.6);
+    --shadow-chakra-glow: 0 0 40px;
+  }
+
+  /* Base Styling */
   * {
     @apply border-border;
   }
-  
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
     background: var(--gradient-cosmic);
     background-attachment: fixed;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', system-ui, sans-serif;
   }
 }
 
 @layer components {
-  /* Multi-Layer Liquid Glass Hierarchy */
+  /* Liquid Glass Surfaces */
   .liquid-glass-surface {
-    @apply bg-white/[0.03] backdrop-blur-md border border-white/[0.08];
-    box-shadow: 
-      0 2px 16px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+    box-shadow: var(--shadow-glass);
   }
 
   .liquid-glass-elevated {
-    @apply bg-white/[0.06] backdrop-blur-xl border border-white/[0.12];
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      0 0 0 1px rgba(255, 255, 255, 0.08);
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    box-shadow: var(--shadow-glass-hover);
   }
 
   .liquid-glass-floating {
-    @apply bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15];
-    box-shadow: 
-      0 16px 64px rgba(0, 0, 0, 0.2),
-      inset 0 2px 0 rgba(255, 255, 255, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
+    @apply bg-white/15 backdrop-blur-lg border border-white/30;
+    box-shadow: var(--shadow-glass-elevated);
   }
 
   .liquid-glass-modal {
-    @apply bg-white/[0.1] backdrop-blur-3xl border border-white/[0.2];
-    box-shadow: 
-      0 24px 96px rgba(0, 0, 0, 0.25),
-      inset 0 2px 0 rgba(255, 255, 255, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.15);
+    @apply bg-white/20 backdrop-blur-xl border border-white/40;
+    box-shadow: var(--shadow-glass-elevated);
   }
 
-  /* Legacy support */
+  /* Legacy Glass Card */
   .glass-card {
-    @apply liquid-glass-elevated relative overflow-hidden;
-    background: var(--gradient-glass);
-    backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-glass);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    @apply relative overflow-hidden rounded-2xl;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px 0 rgba(31, 38, 135, 0.37),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-  
+
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 16px 48px 0 rgba(31, 38, 135, 0.5),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px) scale(1.02);
+  }
+
   .glass-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: subtract;
-    padding: 1px;
-    pointer-events: none;
-  }
-  
-  .glass-card:hover {
-    box-shadow: var(--shadow-glass-hover);
-    transform: translateY(-4px) scale(1.01);
-    backdrop-filter: blur(32px) saturate(220%);
-  }
-  
-  /* Floating Navigation System */
-  .liquid-glow-border {
-    @apply absolute inset-0 rounded-full;
-    background: linear-gradient(45deg, 
-      transparent 0%, 
-      rgba(255, 255, 255, 0.2) 25%, 
-      transparent 50%,
-      rgba(255, 255, 255, 0.2) 75%, 
-      transparent 100%);
-    background-size: 200% 200%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   }
 
-  /* Chakra-specific shadow utilities */
-  .shadow-chakra-root { box-shadow: 0 0 30px rgba(220, 38, 38, 0.4); }
-  .shadow-chakra-sacral { box-shadow: 0 0 30px rgba(251, 146, 60, 0.4); }
-  .shadow-chakra-solar { box-shadow: 0 0 30px rgba(250, 204, 21, 0.4); }
-  .shadow-chakra-heart { box-shadow: 0 0 30px rgba(34, 197, 94, 0.4); }
-  .shadow-chakra-throat { box-shadow: 0 0 30px rgba(59, 130, 246, 0.4); }
-  .shadow-chakra-third-eye { box-shadow: 0 0 30px rgba(147, 51, 234, 0.4); }
-  .shadow-chakra-crown { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); }
-  
-  .demo-button {
-    @apply relative overflow-hidden;
-    background: var(--gradient-chakra-flow);
-    background-size: 300% 300%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-chakra-glow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: gradient-flow 8s ease infinite;
-  }
-  
-  .demo-button::before {
-    @apply absolute inset-0;
+  .glass-card::after {
     content: '';
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1), transparent 50%);
+    pointer-events: none;
   }
-  
-  .demo-button:hover::before {
-    transform: translateX(100%);
+
+  /* Liquid Glow Effects */
+  .liquid-glow-border {
+    position: relative;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--gradient-glass)) border-box;
+    border-radius: inherit;
   }
-  
+
+  .liquid-glow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin: -1px;
+    border-radius: inherit;
+    background: var(--gradient-chakra-flow);
+    opacity: 0.6;
+    animation: gradient-flow 3s ease infinite;
+  }
+
+  /* Chakra Shadows */
+  .shadow-chakra-root { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-root), 0.5); }
+  .shadow-chakra-sacral { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-sacral), 0.5); }
+  .shadow-chakra-solar { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-solar), 0.5); }
+  .shadow-chakra-heart { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-heart), 0.5); }
+  .shadow-chakra-throat { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-throat), 0.5); }
+  .shadow-chakra-third-eye { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-third-eye), 0.5); }
+  .shadow-chakra-crown { box-shadow: var(--shadow-chakra-glow) hsla(var(--chakra-crown), 0.5); }
+
+  /* Demo Button */
+  .demo-button {
+    @apply relative overflow-hidden px-8 py-4 rounded-full font-medium text-white;
+    background: linear-gradient(135deg, 
+      hsla(var(--chakra-crown), 0.8) 0%, 
+      hsla(var(--chakra-heart), 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    animation: gentle-float 6s ease-in-out infinite;
+  }
+
   .demo-button:hover {
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 
-      0 0 40px hsl(var(--chakra-crown) / 0.8),
-      0 0 80px hsl(var(--chakra-third-eye) / 0.4),
-      0 20px 40px rgba(0, 0, 0, 0.3);
+      0 20px 40px rgba(0, 0, 0, 0.2),
+      0 0 60px hsla(var(--chakra-crown), 0.4);
   }
-  
-  /* Chakra Energy Orbs */
+
+  .demo-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .demo-button:hover::before {
+    left: 100%;
+  }
+
+  /* Chakra Orbs */
   .chakra-orb {
-    @apply absolute rounded-full pointer-events-none;
-    filter: blur(1px);
-    animation: chakra-float 6s ease-in-out infinite;
+    @apply rounded-full;
+    background: radial-gradient(circle, 
+      hsla(var(--chakra-heart), 0.4) 0%, 
+      hsla(var(--chakra-heart), 0.2) 50%, 
+      transparent 100%);
+    animation: float 8s ease-in-out infinite;
+    position: relative;
   }
-  
-  .chakra-orb-root {
-    background: radial-gradient(circle, hsl(var(--chakra-root) / 0.6) 0%, transparent 70%);
-    animation-delay: 0s;
-  }
-  
-  .chakra-orb-sacral {
-    background: radial-gradient(circle, hsl(var(--chakra-sacral) / 0.6) 0%, transparent 70%);
-    animation-delay: 1s;
-  }
-  
-  .chakra-orb-solar {
-    background: radial-gradient(circle, hsl(var(--chakra-solar) / 0.6) 0%, transparent 70%);
-    animation-delay: 2s;
-  }
-  
-  .chakra-orb-heart {
-    background: radial-gradient(circle, hsl(var(--chakra-heart) / 0.6) 0%, transparent 70%);
-    animation-delay: 3s;
-  }
-  
-  .chakra-orb-throat {
-    background: radial-gradient(circle, hsl(var(--chakra-throat) / 0.6) 0%, transparent 70%);
-    animation-delay: 4s;
-  }
-  
-  .chakra-orb-third-eye {
-    background: radial-gradient(circle, hsl(var(--chakra-third-eye) / 0.6) 0%, transparent 70%);
-    animation-delay: 5s;
-  }
-  
-  .chakra-orb-crown {
-    background: radial-gradient(circle, hsl(var(--chakra-crown) / 0.6) 0%, transparent 70%);
-    animation-delay: 6s;
-  }
-  
-  /* Input Styles */
+
+  .chakra-orb-root { background: radial-gradient(circle, hsla(var(--chakra-root), 0.6), transparent); }
+  .chakra-orb-sacral { background: radial-gradient(circle, hsla(var(--chakra-sacral), 0.6), transparent); }
+  .chakra-orb-solar { background: radial-gradient(circle, hsla(var(--chakra-solar), 0.6), transparent); }
+  .chakra-orb-heart { background: radial-gradient(circle, hsla(var(--chakra-heart), 0.6), transparent); }
+  .chakra-orb-throat { background: radial-gradient(circle, hsla(var(--chakra-throat), 0.6), transparent); }
+  .chakra-orb-third-eye { background: radial-gradient(circle, hsla(var(--chakra-third-eye), 0.6), transparent); }
+  .chakra-orb-crown { background: radial-gradient(circle, hsla(var(--chakra-crown), 0.6), transparent); }
+
+  /* Glass Input */
   .glass-input {
-    @apply w-full px-4 py-3 rounded-lg transition-all duration-300;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    @apply w-full px-4 py-3 rounded-xl text-white placeholder-white/60;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
   }
-  
+
   .glass-input:focus {
-    @apply outline-none;
-    border-color: hsl(var(--chakra-crown) / 0.6);
-    box-shadow: 0 0 0 3px hsl(var(--chakra-crown) / 0.1);
-  }
-  
-  .glass-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   }
 }
 
 @layer utilities {
-  /* Chakra Energy Animations */
-  @keyframes chakra-float {
-    0%, 100% { 
-      transform: translateY(0px) rotate(0deg); 
-      opacity: 0.3;
-    }
-    50% { 
-      transform: translateY(-20px) rotate(180deg); 
-      opacity: 0.8;
-    }
+  /* Enhanced Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-5px) rotate(-1deg); }
+    75% { transform: translateY(-15px) rotate(0.5deg); }
   }
-  
-  @keyframes gradient-flow {
-    0%, 100% { 
-      background-position: 0% 50%; 
-    }
-    50% { 
-      background-position: 100% 50%; 
-    }
-  }
-  
-  @keyframes liquid-shimmer {
+
+  @keyframes liquid-morph {
     0% { 
-      transform: translateX(-100%); 
+      transform: scale(0.95) translateY(20px);
+      opacity: 0;
+      backdrop-filter: blur(0px);
+    }
+    50% {
+      transform: scale(1.02) translateY(-5px);
+      backdrop-filter: blur(12px);
     }
     100% { 
-      transform: translateX(100%); 
+      transform: scale(1) translateY(0px);
+      opacity: 1;
+      backdrop-filter: blur(16px);
     }
   }
-  
-  @keyframes energy-pulse {
+
+  @keyframes liquid-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes liquid-flow {
+    0% { 
+      background-position: 0% 50%;
+      transform: translateY(0px);
+    }
+    25% { transform: translateY(-2px); }
+    50% { 
+      background-position: 100% 50%;
+      transform: translateY(0px);
+    }
+    75% { transform: translateY(2px); }
+    100% { 
+      background-position: 0% 50%;
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes chakra-pulse {
     0%, 100% { 
-      opacity: 0.3; 
-      transform: scale(1); 
+      opacity: 0.3;
+      transform: scale(1);
     }
     50% { 
-      opacity: 0.8; 
-      transform: scale(1.1); 
+      opacity: 0.6;
+      transform: scale(1.05);
     }
   }
-  
-  @keyframes liquid-rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+
+  @keyframes energy-pulse {
+    0%, 100% { 
+      opacity: 0.5;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% { 
+      opacity: 1;
+      transform: scale(1.15);
+      filter: brightness(1.3);
+    }
   }
-  
-  @keyframes liquid-flow {
+
+  @keyframes gradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
 
-  @keyframes liquid-glow {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
   }
 
-  @keyframes page-transition {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.98); filter: blur(4px); }
-    100% { opacity: 1; transform: scale(1); filter: blur(0px); }
-  }
-  
-  @keyframes liquid-morphism {
-    0%, 100% { 
-      border-radius: 1rem 2rem 1rem 2rem;
-      background-position: 0% 50%;
-    }
-    25% { 
-      border-radius: 2rem 1rem 2rem 1rem;
-      background-position: 50% 100%;
-    }
-    50% { 
-      border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
-      background-position: 100% 50%;
-    }
-    75% { 
-      border-radius: 2rem 1rem 2rem 1rem;
-      background-position: 50% 0%;
-    }
-  }
-  
-  @keyframes chakra-energy-flow {
-    0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
-    25% { transform: scale(1.1) rotate(90deg); opacity: 0.8; }
-    50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-    75% { transform: scale(1.1) rotate(270deg); opacity: 0.8; }
-    100% { transform: scale(1) rotate(360deg); opacity: 0.6; }
+  @keyframes gentle-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
   }
 
-  @keyframes energy-pulse {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); filter: brightness(1.4) saturate(1.2); }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+    50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.4); }
   }
-  
+
   @keyframes scale-in {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
   }
-  
+
   @keyframes fade-slide-up {
     0% {
       opacity: 0;
@@ -397,118 +369,181 @@
       transform: translateY(0);
     }
   }
-  
-  /* Enhanced Animation System */
-  .animate-chakra-float { animation: chakra-float 8s ease-in-out infinite; }
-  .animate-liquid-flow { animation: liquid-flow 6s ease-in-out infinite; }
-  .animate-liquid-glow { animation: liquid-glow 4s ease-in-out infinite; }
-  .animate-liquid-shimmer { animation: liquid-shimmer 2.5s ease-in-out infinite; }
-  .animate-page-transition { animation: page-transition 0.6s ease-in-out; }
-  .animate-chakra-energy-flow { animation: chakra-energy-flow 8s linear infinite; }
-  .animate-energy-pulse { animation: energy-pulse 3s ease-in-out infinite; }
-  .animate-scale-in { animation: scale-in 0.3s ease-out; }
-  .animate-fade-slide-up { animation: fade-slide-up 0.5s ease-out; }
-  .animate-liquid-rotate { animation: liquid-rotate 3s linear infinite; }
-  .animate-liquid-morphism { animation: liquid-morphism 8s ease-in-out infinite; }
-  
-  /* Liquid Utilities */
+
+  .animate-chakra-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-liquid-flow {
+    animation: liquid-flow 15s ease infinite;
+    background: linear-gradient(-45deg, transparent, hsl(var(--chakra-crown))/5%, transparent, hsl(var(--chakra-heart))/5%, transparent);
+    background-size: 400% 400%;
+  }
+
+  .animate-liquid-morph {
+    animation: liquid-morph 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-liquid-shimmer {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary))/20%, transparent);
+    background-size: 200% 100%;
+    animation: liquid-shimmer 3s infinite;
+  }
+
+  .animate-chakra-pulse {
+    animation: chakra-pulse 4s ease-in-out infinite;
+  }
+
+  .animate-energy-pulse {
+    animation: energy-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-gradient-flow {
+    background-size: 400% 400%;
+    animation: gradientFlow 15s ease infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-gentle-float {
+    animation: gentle-float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+
+  .animate-fade-slide-up {
+    animation: fade-slide-up 0.5s ease-out;
+  }
+
+  /* Liquid Utilities and Grid System */
   .liquid-hover {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-glass-hover;
   }
-  
-  .liquid-hover:hover {
-    transform: translateY(-4px) scale(1.02);
-    filter: brightness(1.1);
-  }
-  
+
   .liquid-pressure {
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    @apply transition-all duration-200 active:scale-95 active:shadow-glass;
   }
-  
-  .liquid-pressure:active {
-    transform: scale(0.96);
-    filter: brightness(0.9);
+
+  /* Liquid Typography Scale */
+  .liquid-typography-primary {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight;
   }
-  
+
+  .liquid-typography-secondary {
+    @apply text-base md:text-lg font-medium;
+  }
+
+  .liquid-typography-tertiary {
+    @apply text-sm md:text-base font-normal;
+  }
+
+  /* Liquid Touch System */
+  .liquid-touch {
+    @apply transition-all duration-300 hover:shadow-chakra-glow active:scale-95;
+  }
+
+  .liquid-urgent-glow {
+    @apply animate-pulse shadow-chakra-solar;
+  }
+
   .contextual-blur-light {
     backdrop-filter: blur(8px) saturate(120%);
   }
-  
+
   .contextual-blur-medium {
     backdrop-filter: blur(16px) saturate(160%);
   }
-  
+
   .contextual-blur-heavy {
     backdrop-filter: blur(32px) saturate(200%);
   }
-  
-  /* Liquid Grid System */
+
   .liquid-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-auto-rows: min-content;
-    align-items: start;
+    @apply grid gap-6;
   }
-  
+
+  .liquid-grid-cols-2 {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+
+  .liquid-grid-cols-3 {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .liquid-grid-cols-4 {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .liquid-grid-cols-5 {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5;
+  }
+
+  /* Masonry Grid Variant */
+  .liquid-grid-masonry {
+    @apply columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6;
+  }
+
+  .liquid-grid-masonry .liquid-grid-item {
+    @apply break-inside-avoid mb-6;
+  }
+
+  /* Dynamic Grid Variant */
+  .liquid-grid-dynamic {
+    @apply grid gap-6 auto-rows-min;
+  }
+
+  /* Traditional Grid Variant */
+  .liquid-grid-traditional .liquid-grid-item {
+    @apply aspect-square;
+  }
+
   .liquid-grid-item {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    animation: liquid-morphism 12s ease-in-out infinite;
+    @apply liquid-glass-elevated rounded-2xl p-6 transition-all duration-500;
   }
-  
-  .liquid-grid-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    z-index: 10;
-  }
-  
+
   .liquid-grid-item-small {
-    grid-row: span 1;
+    @apply col-span-1 row-span-1;
   }
-  
+
   .liquid-grid-item-medium {
-    grid-row: span 2;
+    @apply col-span-1 row-span-1 md:col-span-1;
   }
-  
+
   .liquid-grid-item-large {
-    grid-row: span 3;
+    @apply col-span-1 row-span-2 md:col-span-2;
   }
-  
+
   .liquid-grid-item-wide {
-    grid-column: span 2;
-    grid-row: span 2;
+    @apply col-span-1 md:col-span-2 row-span-1;
   }
-  
+
   .liquid-grid-item-tall {
-    grid-row: span 4;
+    @apply col-span-1 row-span-2;
   }
-  
+
   .liquid-grid-item-xl {
-    grid-column: span 2;
-    grid-row: span 3;
+    @apply col-span-1 md:col-span-2 lg:col-span-3 row-span-2;
   }
-  
+
   .liquid-grid-item-featured {
-    background: var(--gradient-chakra-flow);
-    background-size: 400% 400%;
-    animation: gradient-flow 8s ease infinite, liquid-morphism 12s ease-in-out infinite;
+    @apply col-span-1 md:col-span-2 lg:col-span-2 row-span-2;
+    @apply bg-gradient-to-br from-chakra-crown/15 via-chakra-heart/10 to-chakra-root/15;
+    @apply border-chakra-crown/40 shadow-chakra-glow;
+    @apply animate-liquid-flow relative overflow-hidden;
   }
-  
-  @media (min-width: 768px) {
-    .liquid-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .liquid-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
-  }
-  
-  @media (min-width: 1280px) {
-    .liquid-grid {
-      grid-template-columns: repeat(8, 1fr);
-    }
+
+  .liquid-grid-item-featured::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent;
+    @apply translate-x-[-100%] animate-liquid-shimmer;
   }
 }
 
