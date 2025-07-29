@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Eye, EyeOff, Loader2, CheckCircle, AlertCircle, Mail, Lock } from 'lucide-react';
 import { GlassCard } from '@/components/GlassCard';
 import { ChakraOrb } from '@/components/ChakraOrb';
@@ -9,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
 export const AdminLogin = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
@@ -28,7 +30,11 @@ export const AdminLogin = () => {
         description: 'Welcome to the Klear Karma admin portal',
         duration: 4000,
       });
-      setShowDashboard(true);
+      
+      // Navigate to dashboard after successful login
+      setTimeout(() => {
+        navigate('/admin/dashboard');
+      }, 1000);
     } else {
       toast.error(result.message || 'Demo login failed', {
         description: 'Please try again or contact support',
@@ -52,7 +58,11 @@ export const AdminLogin = () => {
         description: `Welcome back, ${result.user?.fullName}`,
         duration: 4000,
       });
-      setShowDashboard(true);
+      
+      // Navigate to dashboard after successful login
+      setTimeout(() => {
+        navigate('/admin/dashboard');
+      }, 1000);
     } else {
       toast.error(result.message || 'Login failed', {
         description: 'Please check your credentials and try again',
@@ -67,6 +77,13 @@ export const AdminLogin = () => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setCredentials(prev => ({ ...prev, [field]: value }));
   };
+
+  // Show dashboard preview when user is logged in
+  useEffect(() => {
+    if (user) {
+      setShowDashboard(true);
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-gradient-cosmic flex items-center justify-center p-4 overflow-hidden relative">

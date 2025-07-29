@@ -20,6 +20,7 @@ import { LiquidMetricGrid } from '@/components/liquid/LiquidMetricGrid';
 import { PageChakraTheme } from '@/components/liquid/PageChakraTheme';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface MetricCardProps {
   title: string;
@@ -100,6 +101,8 @@ interface ActivityItem {
 }
 
 function ActivityFeed() {
+  const navigate = useNavigate();
+  
   const [activities] = useState<ActivityItem[]>([
     {
       id: '1',
@@ -165,11 +168,30 @@ function ActivityFeed() {
     }
   };
 
+  const getActivityHref = (type: string) => {
+    switch (type) {
+      case 'user': return '/admin/users';
+      case 'practitioner': return '/admin/practitioners';
+      case 'booking': return '/admin/bookings';
+      case 'payment': return '/admin/analytics';
+      case 'system': return '/admin/audit';
+      default: return '/admin/dashboard';
+    }
+  };
+
+  const handleActivityClick = (type: string) => {
+    const href = getActivityHref(type);
+    navigate(href);
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-white font-display liquid-typography-primary">Recent Activity</h3>
-        <button className="text-chakra-crown hover:text-chakra-third-eye transition-colors text-sm liquid-touch">
+        <button 
+          onClick={() => navigate('/admin/analytics')}
+          className="text-chakra-crown hover:text-chakra-third-eye transition-colors text-sm liquid-touch"
+        >
           View All
         </button>
       </div>
@@ -178,7 +200,8 @@ function ActivityFeed() {
         {activities.map((activity, index) => (
           <div
             key={activity.id}
-            className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors animate-fade-in"
+            onClick={() => handleActivityClick(activity.type)}
+            className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors animate-fade-in cursor-pointer"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="flex-shrink-0 mt-0.5">
@@ -202,6 +225,8 @@ function ActivityFeed() {
 }
 
 function QuickActions() {
+  const navigate = useNavigate();
+  
   const actions = [
     {
       title: 'Verify Practitioner',
@@ -214,24 +239,28 @@ function QuickActions() {
       title: 'Review Reports',
       description: '7 content reports',
       icon: <Shield className="w-5 h-5 text-chakra-third-eye" />,
-      href: '/admin/moderation',
+      href: '/admin/audit',
       urgent: false
     },
     {
       title: 'User Support',
       description: '12 open tickets',
       icon: <Users className="w-5 h-5 text-chakra-heart" />,
-      href: '/admin/support',
+      href: '/admin/users',
       urgent: false
     },
     {
       title: 'System Health',
       description: 'All systems operational',
       icon: <Activity className="w-5 h-5 text-chakra-root" />,
-      href: '/admin/system',
+      href: '/admin/settings',
       urgent: false
     }
   ];
+
+  const handleActionClick = (href: string) => {
+    navigate(href);
+  };
 
   return (
     <div className="p-6">
@@ -241,9 +270,11 @@ function QuickActions() {
         {actions.map((action, index) => (
           <button
             key={action.title}
+            onClick={() => handleActionClick(action.href)}
             className={cn(
               "p-4 rounded-lg text-left transition-all duration-300 hover:scale-102 animate-fade-in",
               "bg-white/5 hover:bg-white/10 border border-white/10",
+              "cursor-pointer",
               action.urgent && "border-chakra-solar/50 bg-chakra-solar/10"
             )}
             style={{ animationDelay: `${index * 150}ms` }}
@@ -308,7 +339,8 @@ export default function Dashboard() {
         isPositive: data.users.growth > 0,
         label: 'this week'
       },
-      delay: 0
+      delay: 0,
+      href: '/admin/users'
     },
     {
       id: 'practitioners',
@@ -324,7 +356,8 @@ export default function Dashboard() {
         label: 'verified'
       },
       delay: 150,
-      urgent: data.practitioners.pending > 0
+      urgent: data.practitioners.pending > 0,
+      href: '/admin/practitioners'
     },
     {
       id: 'bookings-today',
@@ -334,7 +367,8 @@ export default function Dashboard() {
       icon: <Calendar className="w-6 h-6" />,
       chakra: 'solar' as const,
       size: 'medium' as const,
-      delay: 300
+      delay: 300,
+      href: '/admin/bookings'
     },
     {
       id: 'revenue',
@@ -349,7 +383,8 @@ export default function Dashboard() {
         isPositive: data.revenue.growth > 0,
         label: 'this month'
       },
-      delay: 450
+      delay: 450,
+      href: '/admin/analytics'
     },
     {
       id: 'products',
@@ -364,7 +399,8 @@ export default function Dashboard() {
         isPositive: true,
         label: 'this week'
       },
-      delay: 600
+      delay: 600,
+      href: '/admin/products'
     },
     {
       id: 'security-events',
@@ -375,7 +411,8 @@ export default function Dashboard() {
       chakra: 'third-eye' as const,
       size: 'medium' as const,
       delay: 750,
-      urgent: true
+      urgent: true,
+      href: '/admin/audit'
     },
     {
       id: 'user-satisfaction',
@@ -390,7 +427,8 @@ export default function Dashboard() {
         isPositive: true,
         label: 'improvement'
       },
-      delay: 900
+      delay: 900,
+      href: '/admin/analytics'
     },
     {
       id: 'system-health',
@@ -400,7 +438,8 @@ export default function Dashboard() {
       icon: <Activity className="w-6 h-6" />,
       chakra: 'heart' as const,
       size: 'medium' as const,
-      delay: 1050
+      delay: 1050,
+      href: '/admin/settings'
     }
   ] : [];
 

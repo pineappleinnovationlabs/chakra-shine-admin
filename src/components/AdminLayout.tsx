@@ -21,7 +21,7 @@ export function AdminLayout() {
       <FloatingNavigation />
       
       {/* Main Content with Full Width */}
-      <main className="relative z-10 pt-24 pb-6 px-6 md:px-8 lg:px-12">
+      <main className="relative z-10 pt-32 pb-6 px-6 md:px-8 lg:px-12">
         <div className="max-w-none animate-page-transition">
           <Outlet />
         </div>

@@ -1,9 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   /* CSS Variables and Design Tokens */
@@ -427,9 +427,56 @@
   /* Dynamic Grid Variant */
   .liquid-grid-dynamic {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
     gap: 1.5rem;
     grid-auto-rows: minmax(140px, auto);
+  }
+
+  .liquid-grid-dynamic.liquid-grid-cols-2 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .liquid-grid-dynamic.liquid-grid-cols-3 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .liquid-grid-dynamic.liquid-grid-cols-4 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .liquid-grid-dynamic.liquid-grid-cols-5 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    .liquid-grid-dynamic.liquid-grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .liquid-grid-dynamic.liquid-grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .liquid-grid-dynamic.liquid-grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .liquid-grid-dynamic.liquid-grid-cols-5 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .liquid-grid-dynamic.liquid-grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .liquid-grid-dynamic.liquid-grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .liquid-grid-dynamic.liquid-grid-cols-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 
   /* Traditional Grid Variant */

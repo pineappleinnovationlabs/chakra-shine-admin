@@ -28,7 +28,7 @@ interface UseAdminAuthReturn {
   user: AdminUser | null;
   loginWithDemo: () => Promise<AuthResponse>;
   loginWithCredentials: (credentials: LoginCredentials) => Promise<AuthResponse>;
-  logout: () => void;
+  logout: (onSuccess?: () => void) => void;
 }
 
 // Demo credentials for immediate access
@@ -133,11 +133,16 @@ export const useAdminAuth = (): UseAdminAuthReturn => {
     }
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback((onSuccess?: () => void) => {
     localStorage.removeItem('kk_admin_token');
     localStorage.removeItem('kk_admin_user');
     setUser(null);
     setError(null);
+    
+    // Call success callback if provided
+    if (onSuccess) {
+      onSuccess();
+    }
   }, []);
 
   return {

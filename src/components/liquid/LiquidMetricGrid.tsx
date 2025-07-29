@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ChakraOrb } from "@/components/ChakraOrb";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type ChakraType = 'root' | 'sacral' | 'solar' | 'heart' | 'throat' | 'third-eye' | 'crown';
 
@@ -19,6 +20,7 @@ interface MetricData {
   };
   delay?: number;
   urgent?: boolean;
+  href?: string;
 }
 
 interface LiquidMetricGridProps {
@@ -29,7 +31,14 @@ interface LiquidMetricGridProps {
 }
 
 function LiquidMetricCard({ metric }: { metric: MetricData }) {
-  const { title, value, subtitle, icon, chakra, size = 'medium', trend, delay = 0, urgent } = metric;
+  const navigate = useNavigate();
+  const { title, value, subtitle, icon, chakra, size = 'medium', trend, delay = 0, urgent, href } = metric;
+  
+  const handleClick = () => {
+    if (href) {
+      navigate(href);
+    }
+  };
   
   return (
     <div 
@@ -38,9 +47,11 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
         `liquid-grid-item-${size}`,
         size === 'featured' && "liquid-grid-item-featured",
         urgent && "liquid-urgent-glow",
-        "animate-fade-in liquid-hover"
+        "animate-fade-in liquid-hover",
+        href && "cursor-pointer"
       )}
       style={{ animationDelay: `${delay}ms` }}
+      onClick={handleClick}
     >
       {/* Background Chakra Energy */}
       <ChakraOrb 
@@ -104,6 +115,13 @@ function LiquidMetricCard({ metric }: { metric: MetricData }) {
             <div className="flex items-center gap-2 text-chakra-solar liquid-typography-tertiary">
               <div className="w-2 h-2 bg-chakra-solar rounded-full" />
               <span>Requires attention</span>
+            </div>
+          )}
+          
+          {/* Navigation Hint */}
+          {href && (
+            <div className="flex items-center gap-2 text-white/40 liquid-typography-tertiary">
+              <span>Click to view details</span>
             </div>
           )}
         </div>

@@ -73,7 +73,7 @@ export const LiquidPageHeader = ({
           <div className="flex-1 space-y-2">
             <h1 className={cn(
               "text-4xl font-bold text-white font-display",
-              "liquid-typography-primary animate-liquid-shimmer"
+              "liquid-typography-primary"
             )}>
               {title}
             </h1>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
@@ -20,6 +20,7 @@ import { ChakraEnergyFlow } from '@/components/ChakraEnergyFlow';
 import { cn } from '@/lib/utils';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from 'sonner';
 
 const navigationItems = [
   {
@@ -96,6 +97,7 @@ const navigationItems = [
 
 export function FloatingNavigation() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAdminAuth();
   const isMobile = useIsMobile();
   const [showProfile, setShowProfile] = useState(false);
@@ -114,6 +116,17 @@ export function FloatingNavigation() {
 
   const handleProfileClick = () => {
     setShowProfile(!showProfile);
+  };
+
+  const handleLogout = () => {
+    logout(() => {
+      toast.success('Logged out successfully', {
+        description: 'You have been signed out of the admin portal',
+        duration: 3000,
+      });
+      navigate('/');
+    });
+    setShowProfile(false);
   };
 
   if (isMobile) {
@@ -148,7 +161,7 @@ export function FloatingNavigation() {
                   <span className="text-sm">Notifications</span>
                 </button>
                 <button 
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="flex-1 liquid-glass-elevated rounded-xl p-3 flex items-center justify-center gap-2 text-red-400 hover:text-red-300 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
@@ -345,7 +358,7 @@ export function FloatingNavigation() {
                       <div className="border-t border-white/10 my-2" />
                       
                       <button 
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="w-full text-left px-4 py-3 rounded-xl hover:bg-red-500/20 transition-all duration-300 flex items-center gap-3 text-red-400 hover:text-red-300"
                       >
                         <LogOut className="w-4 h-4" />

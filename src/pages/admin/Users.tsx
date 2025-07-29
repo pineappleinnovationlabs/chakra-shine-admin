@@ -322,7 +322,7 @@ export default function Users() {
         {/* Liquid Metrics Grid */}
         <LiquidMetricGrid 
           metrics={metrics}
-          columns={4}
+          columns={2}
           variant="dynamic"
         />
 
